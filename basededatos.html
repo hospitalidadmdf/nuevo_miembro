@@ -126,6 +126,18 @@
           padding: 10px;
         }
       }
+      .card.editing {
+  box-shadow: 0 0 0 3px #007bff66; /* resalta con azul translúcido */
+  background: #eef4ff; /* fondo sutil */
+  transition: box-shadow 0.2s ease, background 0.3s ease;
+}
+@media (max-width: 600px) {
+  .card.editing {
+    background: #dce8ff; /* azul un poco más notorio en pantallas pequeñas */
+    box-shadow: 0 0 0 2px #0b1e4d88;
+  }
+}
+
     </style>
   </head>
 
