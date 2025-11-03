@@ -72,21 +72,22 @@ document
     // ================================
     // Envío de correos con EmailJS
     // ================================
-    try {
-      // 1️⃣ Correo al pastor
-      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_PASTOR, {
-        nombre,
-        correo,
-        telefono,
-        fecha: new Date().toLocaleString("es-CR"),
-      });
+    // 1️⃣ Siempre enviar al pastor
+await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_PASTOR, {
+  nombre,
+  correo: correo || "No proporcionado",
+  telefono: telefono || "No proporcionado", 
+  fecha: new Date().toLocaleString("es-CR"),
+});
 
-      // 2️⃣ Correo al visitante
-      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_VISITANTE, {
-        nombre,
-        correo,
-        versiculo,
-      });
+// 2️⃣ Solo enviar al visitante si hay correo
+if (correo) {
+  await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_VISITANTE, {
+    nombre,
+    correo,
+    versiculo,
+  });
+}
 
       mostrarMensaje("¡Registro enviado con éxito! 🎉", "success");
       e.target.reset();
