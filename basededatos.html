@@ -4,80 +4,166 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Mundo de Fe CR · Base de Datos</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
     <style>
+      :root {
+        --azul: #0b1e4d;
+        --azul-claro: #1f3b8a;
+        --gris-claro: #f4f6fa;
+        --blanco: #ffffff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
       body {
         font-family: "Poppins", sans-serif;
-        background: #f6f8fb;
+        background: var(--gris-claro);
         color: #222;
-        padding: 20px;
+        margin: 0;
+        padding: 0;
       }
-      h1 {
-        color: #0b1e4d;
+
+      header {
+        background: var(--azul);
+        color: white;
         text-align: center;
+        padding: 25px 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       }
+
+      header h1 {
+        margin: 0;
+        font-size: 1.8rem;
+        letter-spacing: 0.5px;
+      }
+
+      main {
+        padding: 30px 5%;
+      }
+
       table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 20px;
-        background: white;
+        background: var(--blanco);
         border-radius: 12px;
         overflow: hidden;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       }
-      th, td {
+
+      th {
+        background-color: var(--azul);
+        color: white;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-size: 0.9rem;
+        padding: 12px;
+      }
+
+      td {
         padding: 12px 15px;
         border-bottom: 1px solid #eee;
         text-align: center;
       }
-      th {
-        background-color: #0b1e4d;
-        color: white;
-      }
+
       tr:hover td {
-        background: #f0f4ff;
+        background: #f3f6ff;
       }
+
       button {
-        background: #0b1e4d;
-        color: white;
         border: none;
-        padding: 6px 10px;
-        border-radius: 6px;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 8px;
         cursor: pointer;
+        transition: 0.2s ease-in-out;
+        font-weight: 500;
       }
+
       button:hover {
-        background: #16377a;
+        transform: scale(1.05);
       }
+
       .edit {
-        background: #0b6efd;
+        background: #007bff;
       }
+
+      .save {
+        background: #198754;
+      }
+
       .delete {
         background: #dc3545;
       }
-      .save {
-        background: #198754;
+
+      .edit:hover {
+        background: #0b63ce;
+      }
+
+      .save:hover {
+        background: #157347;
+      }
+
+      .delete:hover {
+        background: #bb2d3b;
+      }
+
+      footer {
+        text-align: center;
+        color: #777;
+        padding: 20px 0;
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 768px) {
+        th,
+        td {
+          font-size: 0.85rem;
+          padding: 10px;
+        }
+
+        header h1 {
+          font-size: 1.4rem;
+        }
       }
     </style>
   </head>
   <body>
-    <h1>📋 Registro de Visitantes - Mundo de Fe CR</h1>
-    <table id="tablaVisitantes">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Correo</th>
-          <th>Teléfono</th>
-          <th>Fecha</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+    <header>
+      <h1>📋 Registro de Visitantes</h1>
+      <p style="opacity: 0.9;">Mundo de Fe Costa Rica</p>
+    </header>
+
+    <main>
+      <table id="tablaVisitantes">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Teléfono</th>
+            <th>Fecha</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </main>
+
+    <footer>
+      © <span id="year"></span> Mundo de Fe Costa Rica · Todos los derechos reservados
+    </footer>
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
     <script>
-      // Configuración Firebase (misma que en tu app)
+      // Configuración Firebase
       const firebaseConfig = {
         apiKey: "AIzaSyCH3PFA3aZRfcWULt7zTTpNFERnKgijE7w",
         authDomain: "hospitalidad-mdf.firebaseapp.com",
@@ -87,17 +173,19 @@
         messagingSenderId: "460182229194",
         appId: "1:460182229194:web:0dae840c04f5b5a7236433",
       };
+
       firebase.initializeApp(firebaseConfig);
       const db = firebase.database();
-
       const tabla = document.querySelector("#tablaVisitantes tbody");
 
+      // Cargar datos
       function cargarDatos() {
         db.ref("visitantes").on("value", (snapshot) => {
           tabla.innerHTML = "";
           snapshot.forEach((child) => {
             const data = child.val();
             const id = child.key;
+
             const fila = document.createElement("tr");
             fila.innerHTML = `
               <td contenteditable="false">${data.nombre || ""}</td>
@@ -110,16 +198,18 @@
                 <button class="delete">Borrar</button>
               </td>
             `;
+
             fila.querySelector(".edit").onclick = () => editarFila(fila);
             fila.querySelector(".save").onclick = () => guardarFila(fila, id);
             fila.querySelector(".delete").onclick = () => borrarFila(id);
+
             tabla.appendChild(fila);
           });
         });
       }
 
       function editarFila(fila) {
-        fila.querySelectorAll("td[contenteditable]").forEach(td => td.contentEditable = true);
+        fila.querySelectorAll("td[contenteditable]").forEach((td) => (td.contentEditable = true));
         fila.querySelector(".edit").style.display = "none";
         fila.querySelector(".save").style.display = "inline-block";
       }
@@ -131,7 +221,7 @@
           correo: correo.textContent.trim(),
           telefono: telefono.textContent.trim(),
         });
-        fila.querySelectorAll("td[contenteditable]").forEach(td => td.contentEditable = false);
+        fila.querySelectorAll("td[contenteditable]").forEach((td) => (td.contentEditable = false));
         fila.querySelector(".edit").style.display = "inline-block";
         fila.querySelector(".save").style.display = "none";
       }
