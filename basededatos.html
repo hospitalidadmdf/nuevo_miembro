@@ -15,15 +15,15 @@
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
   font-family: "Poppins", sans-serif;
   background: var(--gris-claro);
   color: #222;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden; /* 👈 evita que haya scroll horizontal extra */
+  overflow-x: hidden; /* evita desplazamiento horizontal general */
 }
 
 header {
@@ -41,18 +41,34 @@ header h1 {
 }
 
 main {
-  padding: 30px 5%;
-  overflow-x: auto; /* 👈 permite desplazarse si la tabla se pasa del ancho */
+  padding: 20px;
+  width: 100%;
+  overflow-x: auto; /* permite scroll horizontal si la tabla se extiende */
+}
+
+/* ======== TABLA ======== */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
 }
 
 table {
-  min-width: 800px; /* 👈 asegura un tamaño base estable */
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed; /* mantiene columnas estables */
   background: var(--blanco);
   border-radius: 12px;
-  overflow: hidden;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  min-width: 700px; /* evita que las columnas se aplasten */
+}
+
+th,
+td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 th {
@@ -62,15 +78,7 @@ th {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   font-size: 0.9rem;
-  padding: 12px;
-  white-space: nowrap; /* 👈 evita que los títulos se rompan en dos líneas */
-}
-
-td {
-  padding: 12px 15px;
-  border-bottom: 1px solid #eee;
-  text-align: center;
-  word-break: break-word; /* 👈 corta el texto largo dentro del ancho */
+  white-space: nowrap;
 }
 
 tr:hover td {
@@ -94,11 +102,9 @@ button:hover {
 .edit {
   background: #007bff;
 }
-
 .save {
   background: #198754;
 }
-
 .delete {
   background: #dc3545;
 }
@@ -106,11 +112,9 @@ button:hover {
 .edit:hover {
   background: #0b63ce;
 }
-
 .save:hover {
   background: #157347;
 }
-
 .delete:hover {
   background: #bb2d3b;
 }
@@ -122,13 +126,18 @@ footer {
   font-size: 0.9rem;
 }
 
+/* ======== RESPONSIVE ======== */
 @media (max-width: 768px) {
+  header h1 {
+    font-size: 1.4rem;
+  }
+
   main {
-    padding: 15px;
+    padding: 10px;
   }
 
   table {
-    min-width: 600px;
+    min-width: 600px; /* para scroll suave en móvil */
   }
 
   th,
@@ -136,39 +145,6 @@ footer {
     font-size: 0.85rem;
     padding: 10px;
   }
-
-  header h1 {
-    font-size: 1.4rem;
-  }
-}
-      table {
-  table-layout: fixed; /* 👈 fija el ancho de las columnas */
-  min-width: 800px;
-  width: 100%;
-  border-collapse: collapse;
-  background: var(--blanco);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-th, td {
-  padding: 12px 15px;
-  border-bottom: 1px solid #eee;
-  text-align: center;
-  word-break: break-word;
-  overflow-wrap: break-word;
-}
-
-th {
-  background-color: var(--azul);
-  color: white;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-size: 0.9rem;
-  padding: 12px;
-  white-space: nowrap;
 }
 
     </style>
