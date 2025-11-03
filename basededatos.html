@@ -94,4 +94,55 @@
 
       function cargarDatos() {
         db.ref("visitantes").on("value", (snapshot) => {
-          tabla.i
+          tabla.innerHTML = "";
+          snapshot.forEach((child) => {
+            const data = child.val();
+            const id = child.key;
+            const fila = document.createElement("tr");
+            fila.innerHTML = `
+              <td contenteditable="false">${data.nombre || ""}</td>
+              <td contenteditable="false">${data.correo || ""}</td>
+              <td contenteditable="false">${data.telefono || ""}</td>
+              <td>${new Date(data.fecha).toLocaleString("es-CR")}</td>
+              <td>
+                <button class="edit">Editar</button>
+                <button class="save" style="display:none;">Guardar</button>
+                <button class="delete">Borrar</button>
+              </td>
+            `;
+            fila.querySelector(".edit").onclick = () => editarFila(fila);
+            fila.querySelector(".save").onclick = () => guardarFila(fila, id);
+            fila.querySelector(".delete").onclick = () => borrarFila(id);
+            tabla.appendChild(fila);
+          });
+        });
+      }
+
+      function editarFila(fila) {
+        fila.querySelectorAll("td[contenteditable]").forEach(td => td.contentEditable = true);
+        fila.querySelector(".edit").style.display = "none";
+        fila.querySelector(".save").style.display = "inline-block";
+      }
+
+      function guardarFila(fila, id) {
+        const [nombre, correo, telefono] = fila.querySelectorAll("td");
+        db.ref("visitantes/" + id).update({
+          nombre: nombre.textContent.trim(),
+          correo: correo.textContent.trim(),
+          telefono: telefono.textContent.trim(),
+        });
+        fila.querySelectorAll("td[contenteditable]").forEach(td => td.contentEditable = false);
+        fila.querySelector(".edit").style.display = "inline-block";
+        fila.querySelector(".save").style.display = "none";
+      }
+
+      function borrarFila(id) {
+        if (confirm("¿Seguro que deseas eliminar este registro?")) {
+          db.ref("visitantes/" + id).remove();
+        }
+      }
+
+      cargarDatos();
+    </script>
+  </body>
+</html>
