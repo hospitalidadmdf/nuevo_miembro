@@ -8,9 +8,17 @@
 const EMAILJS_SERVICE_ID = "service_bq2os92";
 const EMAILJS_TEMPLATE_PASTOR = "template_yymapv4";
 const EMAILJS_TEMPLATE_VISITANTE = "template_97nop0r";
-const EMAILJS_PUBLIC_KEY = "uS7NMxU4mD_GgRgia"; // "public_XXXX"
+const EMAILJS_PUBLIC_KEY = "uS7NMxU4mD_GgRgia"; // tu clave pública real
 
-emailjs.init(EMAILJS_PUBLIC_KEY);
+// Inicializar EmailJS con configuración ampliada
+emailjs.init({
+  publicKey: EMAILJS_PUBLIC_KEY,
+  blockHeadless: false,
+  limitRate: {
+    id: "MundoDeFeApp",
+    throttle: 10000, // 10 seg entre envíos para prevenir spam
+  },
+});
 
 // 📖 Versículos aleatorios
 const versiculos = [
@@ -22,7 +30,6 @@ const versiculos = [
 ];
 
 // 🔥 FIREBASE CONFIGURACIÓN
-// Ve a Firebase → Configuración del proyecto → tus credenciales web.
 const firebaseConfig = {
   apiKey: "AIzaSyCH3PFA3aZRfcWULt7zTTpNFERnKgijE7w",
   authDomain: "hospitalidad-mdf.firebaseapp.com",
@@ -67,32 +74,40 @@ document
         fecha: timestamp,
       });
 
-      // Enviar correo al pastor
-      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_PASTOR, {
-        nombre,
-        correo: correo || "No proporcionado",
-        telefono: telefono || "No proporcionado",
-        fecha: new Date().toLocaleString("es-CR"),
-      });
+      // Enviar correo al pastor (usando método directo con clave pública)
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_PASTOR,
+        {
+          nombre,
+          correo: correo || "No proporcionado",
+          telefono: telefono || "No proporcionado",
+          fecha: new Date().toLocaleString("es-CR"),
+        },
+        EMAILJS_PUBLIC_KEY
+      );
 
       // Enviar correo al visitante si tiene correo
       if (correo) {
-        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_VISITANTE, {
-          nombre,
-          correo,
-          versiculo,
-        });
+        await emailjs.send(
+          EMAILJS_SERVICE_ID,
+          EMAILJS_TEMPLATE_VISITANTE,
+          {
+            nombre,
+            correo,
+            versiculo,
+          },
+          EMAILJS_PUBLIC_KEY
+        );
       }
 
       mostrarMensaje("¡Registro enviado con éxito! 🎉", "success");
       e.target.reset();
-
     } catch (error) {
       console.error("Error al enviar correos:", error);
       mostrarMensaje("Error al enviar los correos. Intenta de nuevo.", "error");
     }
   });
-
 
 // ================================
 // Función para mostrar mensajes
