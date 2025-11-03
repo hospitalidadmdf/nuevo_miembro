@@ -51,8 +51,8 @@ document
     const telefono = document.getElementById("telefono").value.trim();
 
     // Validación básica
-    if (!nombre || !correo || !telefono) {
-      mostrarMensaje("Por favor, completa todos los campos.", "error");
+    if (!nombre) {
+      mostrarMensaje("Por favor, completa el campo de nombre.", "error");
       return;
     }
 
