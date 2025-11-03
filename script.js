@@ -24,13 +24,13 @@ const versiculos = [
 // 🔥 FIREBASE CONFIGURACIÓN
 // Ve a Firebase → Configuración del proyecto → tus credenciales web.
 const firebaseConfig = {
-  apiKey: "TU_API_KEY",
-  authDomain: "TU_DOMINIO.firebaseapp.com",
-  databaseURL: "https://TU_BASE.firebaseio.com",
-  projectId: "TU_ID_PROYECTO",
-  storageBucket: "TU_BUCKET.appspot.com",
-  messagingSenderId: "XXXXXXXX",
-  appId: "TU_APP_ID",
+  apiKey: "AIzaSyCH3PFA3aZRfcWULt7zTTpNFERnKgijE7w",
+  authDomain: "hospitalidad-mdf.firebaseapp.com",
+  databaseURL: "https://hospitalidad-mdf-default-rtdb.firebaseio.com/",
+  projectId: "hospitalidad-mdf",
+  storageBucket: "hospitalidad-mdf.firebasestorage.app",
+  messagingSenderId: "460182229194",
+  appId: "1:460182229194:web:0dae840c04f5b5a7236433",
 };
 
 // Inicializar Firebase
