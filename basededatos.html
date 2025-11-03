@@ -7,127 +7,140 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
     <style>
       :root {
-        --azul: #0b1e4d;
-        --azul-claro: #1f3b8a;
-        --gris-claro: #f4f6fa;
-        --blanco: #ffffff;
-      }
+  --azul: #0b1e4d;
+  --azul-claro: #1f3b8a;
+  --gris-claro: #f4f6fa;
+  --blanco: #ffffff;
+}
 
-      * {
-        box-sizing: border-box;
-      }
+* {
+  box-sizing: border-box;
+}
 
-      body {
-        font-family: "Poppins", sans-serif;
-        background: var(--gris-claro);
-        color: #222;
-        margin: 0;
-        padding: 0;
-      }
+body {
+  font-family: "Poppins", sans-serif;
+  background: var(--gris-claro);
+  color: #222;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* 👈 evita que haya scroll horizontal extra */
+}
 
-      header {
-        background: var(--azul);
-        color: white;
-        text-align: center;
-        padding: 25px 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      }
+header {
+  background: var(--azul);
+  color: white;
+  text-align: center;
+  padding: 25px 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
 
-      header h1 {
-        margin: 0;
-        font-size: 1.8rem;
-        letter-spacing: 0.5px;
-      }
+header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  letter-spacing: 0.5px;
+}
 
-      main {
-        padding: 30px 5%;
-      }
+main {
+  padding: 30px 5%;
+  overflow-x: auto; /* 👈 permite desplazarse si la tabla se pasa del ancho */
+}
 
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        background: var(--blanco);
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      }
+table {
+  min-width: 800px; /* 👈 asegura un tamaño base estable */
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--blanco);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
 
-      th {
-        background-color: var(--azul);
-        color: white;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        font-size: 0.9rem;
-        padding: 12px;
-      }
+th {
+  background-color: var(--azul);
+  color: white;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.9rem;
+  padding: 12px;
+  white-space: nowrap; /* 👈 evita que los títulos se rompan en dos líneas */
+}
 
-      td {
-        padding: 12px 15px;
-        border-bottom: 1px solid #eee;
-        text-align: center;
-      }
+td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+  word-break: break-word; /* 👈 corta el texto largo dentro del ancho */
+}
 
-      tr:hover td {
-        background: #f3f6ff;
-      }
+tr:hover td {
+  background: #f3f6ff;
+}
 
-      button {
-        border: none;
-        color: white;
-        padding: 6px 12px;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: 0.2s ease-in-out;
-        font-weight: 500;
-      }
+button {
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+  font-weight: 500;
+}
 
-      button:hover {
-        transform: scale(1.05);
-      }
+button:hover {
+  transform: scale(1.05);
+}
 
-      .edit {
-        background: #007bff;
-      }
+.edit {
+  background: #007bff;
+}
 
-      .save {
-        background: #198754;
-      }
+.save {
+  background: #198754;
+}
 
-      .delete {
-        background: #dc3545;
-      }
+.delete {
+  background: #dc3545;
+}
 
-      .edit:hover {
-        background: #0b63ce;
-      }
+.edit:hover {
+  background: #0b63ce;
+}
 
-      .save:hover {
-        background: #157347;
-      }
+.save:hover {
+  background: #157347;
+}
 
-      .delete:hover {
-        background: #bb2d3b;
-      }
+.delete:hover {
+  background: #bb2d3b;
+}
 
-      footer {
-        text-align: center;
-        color: #777;
-        padding: 20px 0;
-        font-size: 0.9rem;
-      }
+footer {
+  text-align: center;
+  color: #777;
+  padding: 20px 0;
+  font-size: 0.9rem;
+}
 
-      @media (max-width: 768px) {
-        th,
-        td {
-          font-size: 0.85rem;
-          padding: 10px;
-        }
+@media (max-width: 768px) {
+  main {
+    padding: 15px;
+  }
 
-        header h1 {
-          font-size: 1.4rem;
-        }
-      }
+  table {
+    min-width: 600px;
+  }
+
+  th,
+  td {
+    font-size: 0.85rem;
+    padding: 10px;
+  }
+
+  header h1 {
+    font-size: 1.4rem;
+  }
+}
     </style>
   </head>
   <body>
