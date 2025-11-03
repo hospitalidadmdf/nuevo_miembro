@@ -214,6 +214,7 @@
             const telP = card.querySelector("p:nth-child(2)");
 
             btnEdit.onclick = () => {
+              card.classList.add("editing");
               correoP.innerHTML = `<strong>Correo:</strong> <input type="text" value="${data.correo || ""}" />`;
               telP.innerHTML = `<strong>Teléfono:</strong> <input type="text" value="${data.telefono || ""}" />`;
               btnEdit.style.display = "none";
@@ -234,6 +235,7 @@
               btnSave.style.display = "none";
               correoP.innerHTML = `<strong>Correo:</strong> ${nuevoCorreo || "No proporcionado"}`;
               telP.innerHTML = `<strong>Teléfono:</strong> ${nuevoTel || "No proporcionado"}`;
+              card.classList.remove("editing");
             };
 
             // 🗑️ Borrar
