@@ -141,6 +141,36 @@ footer {
     font-size: 1.4rem;
   }
 }
+      table {
+  table-layout: fixed; /* 👈 fija el ancho de las columnas */
+  min-width: 800px;
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--blanco);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+th {
+  background-color: var(--azul);
+  color: white;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.9rem;
+  padding: 12px;
+  white-space: nowrap;
+}
+
     </style>
   </head>
   <body>
