@@ -7,168 +7,135 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
     <style>
       :root {
-  --azul: #0b1e4d;
-  --azul-claro: #1f3b8a;
-  --gris-claro: #f4f6fa;
-  --blanco: #ffffff;
-}
+        --azul: #0b1e4d;
+        --gris-claro: #f5f6fa;
+        --blanco: #fff;
+      }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+      body {
+        font-family: "Poppins", sans-serif;
+        background: var(--gris-claro);
+        margin: 0;
+        padding: 0;
+      }
 
-body {
-  font-family: "Poppins", sans-serif;
-  background: var(--gris-claro);
-  color: #222;
-  overflow-x: hidden; /* evita desplazamiento horizontal general */
-}
+      header {
+        background: var(--azul);
+        color: white;
+        text-align: center;
+        padding: 20px 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
 
-header {
-  background: var(--azul);
-  color: white;
-  text-align: center;
-  padding: 25px 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
+      header h1 {
+        margin: 0;
+        font-size: 1.7rem;
+      }
 
-header h1 {
-  margin: 0;
-  font-size: 1.8rem;
-  letter-spacing: 0.5px;
-}
+      main {
+        padding: 20px;
+        max-width: 700px;
+        margin: 0 auto;
+      }
 
-main {
-  padding: 20px;
-  width: 100%;
-  overflow-x: auto; /* permite scroll horizontal si la tabla se extiende */
-}
+      .card {
+        background: var(--blanco);
+        border-radius: 12px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 15px;
+        overflow: hidden;
+        transition: 0.2s ease;
+      }
 
-/* ======== TABLA ======== */
-.table-container {
-  width: 100%;
-  overflow-x: auto;
-}
+      .card:hover {
+        transform: scale(1.01);
+      }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed; /* mantiene columnas estables */
-  background: var(--blanco);
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  min-width: 700px; /* evita que las columnas se aplasten */
-}
+      .card-header {
+        background: var(--azul);
+        color: white;
+        padding: 15px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
 
-th,
-td {
-  padding: 12px 15px;
-  border-bottom: 1px solid #eee;
-  text-align: center;
-  word-break: break-word;
-  overflow-wrap: break-word;
-}
+      .card-header h3 {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 500;
+      }
 
-th {
-  background-color: var(--azul);
-  color: white;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-size: 0.9rem;
-  white-space: nowrap;
-}
+      .arrow {
+        transition: transform 0.2s;
+      }
 
-tr:hover td {
-  background: #f3f6ff;
-}
+      .card-content {
+        display: none;
+        padding: 15px;
+        background: #f9f9ff;
+      }
 
-button {
-  border: none;
-  color: white;
-  padding: 6px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.2s ease-in-out;
-  font-weight: 500;
-}
+      .card-content p {
+        margin: 6px 0;
+      }
 
-button:hover {
-  transform: scale(1.05);
-}
+      .btn-group {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+      }
 
-.edit {
-  background: #007bff;
-}
-.save {
-  background: #198754;
-}
-.delete {
-  background: #dc3545;
-}
+      button {
+        border: none;
+        padding: 6px 12px;
+        border-radius: 8px;
+        color: white;
+        font-weight: 500;
+        cursor: pointer;
+        transition: 0.2s;
+      }
 
-.edit:hover {
-  background: #0b63ce;
-}
-.save:hover {
-  background: #157347;
-}
-.delete:hover {
-  background: #bb2d3b;
-}
+      button:hover {
+        transform: scale(1.05);
+      }
 
-footer {
-  text-align: center;
-  color: #777;
-  padding: 20px 0;
-  font-size: 0.9rem;
-}
+      .edit {
+        background: #007bff;
+      }
 
-/* ======== RESPONSIVE ======== */
-@media (max-width: 768px) {
-  header h1 {
-    font-size: 1.4rem;
-  }
+      .save {
+        background: #198754;
+      }
 
-  main {
-    padding: 10px;
-  }
+      .delete {
+        background: #dc3545;
+      }
 
-  table {
-    min-width: 600px; /* para scroll suave en móvil */
-  }
+      footer {
+        text-align: center;
+        color: #777;
+        padding: 20px 0;
+        font-size: 0.9rem;
+      }
 
-  th,
-  td {
-    font-size: 0.85rem;
-    padding: 10px;
-  }
-}
-
+      @media (max-width: 600px) {
+        main {
+          padding: 10px;
+        }
+      }
     </style>
   </head>
+
   <body>
     <header>
       <h1>📋 Registro de Visitantes</h1>
-      <p style="opacity: 0.9;">Mundo de Fe Costa Rica</p>
+      <p style="opacity: 0.9">Mundo de Fe Costa Rica</p>
     </header>
 
-    <main>
-      <table id="tablaVisitantes">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Correo</th>
-            <th>Teléfono</th>
-            <th>Fecha</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </main>
+    <main id="contenedor"></main>
 
     <footer>
       © <span id="year"></span> Mundo de Fe Costa Rica · Todos los derechos reservados
@@ -182,7 +149,7 @@ footer {
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
     <script>
-      // Configuración Firebase
+      // 🔥 Configuración Firebase
       const firebaseConfig = {
         apiKey: "AIzaSyCH3PFA3aZRfcWULt7zTTpNFERnKgijE7w",
         authDomain: "hospitalidad-mdf.firebaseapp.com",
@@ -195,60 +162,91 @@ footer {
 
       firebase.initializeApp(firebaseConfig);
       const db = firebase.database();
-      const tabla = document.querySelector("#tablaVisitantes tbody");
+      const contenedor = document.getElementById("contenedor");
 
-      // Cargar datos
       function cargarDatos() {
         db.ref("visitantes").on("value", (snapshot) => {
-          tabla.innerHTML = "";
+          contenedor.innerHTML = "";
           snapshot.forEach((child) => {
             const data = child.val();
             const id = child.key;
 
-            const fila = document.createElement("tr");
-            fila.innerHTML = `
-              <td contenteditable="false">${data.nombre || ""}</td>
-              <td contenteditable="false">${data.correo || ""}</td>
-              <td contenteditable="false">${data.telefono || ""}</td>
-              <td>${new Date(data.fecha).toLocaleString("es-CR")}</td>
-              <td>
-                <button class="edit">Editar</button>
-                <button class="save" style="display:none;">Guardar</button>
-                <button class="delete">Borrar</button>
-              </td>
+            const card = document.createElement("div");
+            card.classList.add("card");
+
+            card.innerHTML = `
+              <div class="card-header">
+                <h3>${data.nombre || "Sin nombre"}</h3>
+                <span class="arrow">▼</span>
+              </div>
+              <div class="card-content">
+                <p><strong>Correo:</strong> ${data.correo || "No proporcionado"}</p>
+                <p><strong>Teléfono:</strong> ${data.telefono || "No proporcionado"}</p>
+                <p><strong>Fecha:</strong> ${new Date(data.fecha).toLocaleString("es-CR")}</p>
+
+                <div class="btn-group">
+                  <button class="edit">Editar</button>
+                  <button class="save" style="display:none;">Guardar</button>
+                  <button class="delete">Borrar</button>
+                </div>
+              </div>
             `;
 
-            fila.querySelector(".edit").onclick = () => editarFila(fila);
-            fila.querySelector(".save").onclick = () => guardarFila(fila, id);
-            fila.querySelector(".delete").onclick = () => borrarFila(id);
+            // 🔽 toggle desplegable
+            const header = card.querySelector(".card-header");
+            const content = card.querySelector(".card-content");
+            const arrow = card.querySelector(".arrow");
 
-            tabla.appendChild(fila);
+            header.onclick = () => {
+              const visible = content.style.display === "block";
+              document.querySelectorAll(".card-content").forEach((c) => (c.style.display = "none"));
+              document.querySelectorAll(".arrow").forEach((a) => (a.style.transform = "rotate(0deg)"));
+              if (!visible) {
+                content.style.display = "block";
+                arrow.style.transform = "rotate(180deg)";
+              }
+            };
+
+            // ✏️ Editar
+            const btnEdit = card.querySelector(".edit");
+            const btnSave = card.querySelector(".save");
+            const correoP = card.querySelector("p:nth-child(1)");
+            const telP = card.querySelector("p:nth-child(2)");
+
+            btnEdit.onclick = () => {
+              correoP.innerHTML = `<strong>Correo:</strong> <input type="text" value="${data.correo || ""}" />`;
+              telP.innerHTML = `<strong>Teléfono:</strong> <input type="text" value="${data.telefono || ""}" />`;
+              btnEdit.style.display = "none";
+              btnSave.style.display = "inline-block";
+            };
+
+            // 💾 Guardar
+            btnSave.onclick = () => {
+              const nuevoCorreo = correoP.querySelector("input").value.trim();
+              const nuevoTel = telP.querySelector("input").value.trim();
+
+              db.ref("visitantes/" + id).update({
+                correo: nuevoCorreo,
+                telefono: nuevoTel,
+              });
+
+              btnEdit.style.display = "inline-block";
+              btnSave.style.display = "none";
+              correoP.innerHTML = `<strong>Correo:</strong> ${nuevoCorreo || "No proporcionado"}`;
+              telP.innerHTML = `<strong>Teléfono:</strong> ${nuevoTel || "No proporcionado"}`;
+            };
+
+            // 🗑️ Borrar
+            const btnDelete = card.querySelector(".delete");
+            btnDelete.onclick = () => {
+              if (confirm("¿Seguro que deseas eliminar este registro?")) {
+                db.ref("visitantes/" + id).remove();
+              }
+            };
+
+            contenedor.appendChild(card);
           });
         });
-      }
-
-      function editarFila(fila) {
-        fila.querySelectorAll("td[contenteditable]").forEach((td) => (td.contentEditable = true));
-        fila.querySelector(".edit").style.display = "none";
-        fila.querySelector(".save").style.display = "inline-block";
-      }
-
-      function guardarFila(fila, id) {
-        const [nombre, correo, telefono] = fila.querySelectorAll("td");
-        db.ref("visitantes/" + id).update({
-          nombre: nombre.textContent.trim(),
-          correo: correo.textContent.trim(),
-          telefono: telefono.textContent.trim(),
-        });
-        fila.querySelectorAll("td[contenteditable]").forEach((td) => (td.contentEditable = false));
-        fila.querySelector(".edit").style.display = "inline-block";
-        fila.querySelector(".save").style.display = "none";
-      }
-
-      function borrarFila(id) {
-        if (confirm("¿Seguro que deseas eliminar este registro?")) {
-          db.ref("visitantes/" + id).remove();
-        }
       }
 
       cargarDatos();
