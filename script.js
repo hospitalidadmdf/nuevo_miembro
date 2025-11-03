@@ -45,57 +45,54 @@ document
   .addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    // Tomar los valores del formulario
     const nombre = document.getElementById("nombre").value.trim();
     const correo = document.getElementById("correo").value.trim();
     const telefono = document.getElementById("telefono").value.trim();
 
-    // Validación básica
     if (!nombre) {
       mostrarMensaje("Por favor, completa el campo de nombre.", "error");
       return;
     }
 
-    // Generar versículo aleatorio
     const versiculo = versiculos[Math.floor(Math.random() * versiculos.length)];
-
-    // Guardar en Firebase
     const timestamp = new Date().toISOString();
-    const nuevoRef = db.ref("visitantes").push();
-    await nuevoRef.set({
-      nombre,
-      correo,
-      telefono,
-      fecha: timestamp,
-    });
 
-    // ================================
-    // Envío de correos con EmailJS
-    // ================================
-    // 1️⃣ Siempre enviar al pastor
-await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_PASTOR, {
-  nombre,
-  correo: correo || "No proporcionado",
-  telefono: telefono || "No proporcionado", 
-  fecha: new Date().toLocaleString("es-CR"),
-});
+    try {
+      // Guardar en Firebase
+      const nuevoRef = db.ref("visitantes").push();
+      await nuevoRef.set({
+        nombre,
+        correo,
+        telefono,
+        fecha: timestamp,
+      });
 
-// 2️⃣ Solo enviar al visitante si hay correo
-if (correo) {
-  await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_VISITANTE, {
-    nombre,
-    correo,
-    versiculo,
-  });
-}
+      // Enviar correo al pastor
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_PASTOR, {
+        nombre,
+        correo: correo || "No proporcionado",
+        telefono: telefono || "No proporcionado",
+        fecha: new Date().toLocaleString("es-CR"),
+      });
+
+      // Enviar correo al visitante si tiene correo
+      if (correo) {
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_VISITANTE, {
+          nombre,
+          correo,
+          versiculo,
+        });
+      }
 
       mostrarMensaje("¡Registro enviado con éxito! 🎉", "success");
       e.target.reset();
+
     } catch (error) {
       console.error("Error al enviar correos:", error);
       mostrarMensaje("Error al enviar los correos. Intenta de nuevo.", "error");
     }
   });
+
 
 // ================================
 // Función para mostrar mensajes
