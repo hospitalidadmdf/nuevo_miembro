@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mundo de Fe CR · Base de Datos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #f6f8fb;
+        color: #222;
+        padding: 20px;
+      }
+      h1 {
+        color: #0b1e4d;
+        text-align: center;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      }
+      th, td {
+        padding: 12px 15px;
+        border-bottom: 1px solid #eee;
+        text-align: center;
+      }
+      th {
+        background-color: #0b1e4d;
+        color: white;
+      }
+      tr:hover td {
+        background: #f0f4ff;
+      }
+      button {
+        background: #0b1e4d;
+        color: white;
+        border: none;
+        padding: 6px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #16377a;
+      }
+      .edit {
+        background: #0b6efd;
+      }
+      .delete {
+        background: #dc3545;
+      }
+      .save {
+        background: #198754;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>📋 Registro de Visitantes - Mundo de Fe CR</h1>
+    <table id="tablaVisitantes">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Correo</th>
+          <th>Teléfono</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script>
+      // Configuración Firebase (misma que en tu app)
+      const firebaseConfig = {
+        apiKey: "AIzaSyCH3PFA3aZRfcWULt7zTTpNFERnKgijE7w",
+        authDomain: "hospitalidad-mdf.firebaseapp.com",
+        databaseURL: "https://hospitalidad-mdf-default-rtdb.firebaseio.com/",
+        projectId: "hospitalidad-mdf",
+        storageBucket: "hospitalidad-mdf.firebasestorage.app",
+        messagingSenderId: "460182229194",
+        appId: "1:460182229194:web:0dae840c04f5b5a7236433",
+      };
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.database();
+
+      const tabla = document.querySelector("#tablaVisitantes tbody");
+
+      function cargarDatos() {
+        db.ref("visitantes").on("value", (snapshot) => {
+          tabla.i
