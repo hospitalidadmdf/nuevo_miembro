@@ -19,13 +19,11 @@
     <a class="skip-link" href="#form-visitante">Saltar al formulario</a>
 
     <header class="site-header">
-      <div class="brand">
-        <!-- Reemplaza el span por tu logo cuando lo tengas -->
-        <span class="brand-logo" aria-hidden="true">✚</span>
-        <div class="brand-text">
-          <h1 class="brand-title">Mundo de Fe Costa Rica</h1>
-          <p class="brand-subtitle">Registro de Nuevos</p>
-        </div>
+      <div class="brand centered-logo">
+        <!-- Logo centrado -->
+        <img src="./logo.jpg" alt="Logo Mundo de Fe Costa Rica" class="church-logo" />
+        <h1 class="brand-title">Mundo de Fe Costa Rica</h1>
+        <p class="brand-subtitle">Registro de Nuevos</p>
       </div>
     </header>
 
@@ -36,7 +34,6 @@
           Por favor, comparte tus datos para darte la bienvenida durante el servicio.
         </p>
 
-        <!-- IMPORTANTE: más adelante agregaremos JS para EmailJS y Firebase -->
         <form id="form-visitante" class="form" autocomplete="on" novalidate>
           <div class="form-row">
             <label for="nombre">Nombre completo</label>
@@ -44,13 +41,10 @@
               id="nombre"
               name="nombre"
               type="text"
-              inputmode="text"
               placeholder="Ej. Juan Pérez"
-              autocomplete="name"
               required
               maxlength="80"
             />
-            <small class="hint">Requerido. Máx. 80 caracteres.</small>
           </div>
 
           <div class="form-row">
@@ -60,10 +54,8 @@
               name="correo"
               type="email"
               placeholder="ejemplo@correo.com"
-              autocomplete="email"
               required
             />
-            <small class="hint">Usaremos este correo para enviarte la bienvenida.</small>
           </div>
 
           <div class="form-row">
@@ -72,27 +64,19 @@
               id="telefono"
               name="telefono"
               type="tel"
-              inputmode="numeric"
               placeholder="8888-8888"
-              autocomplete="tel"
               pattern="^\d{4}[- ]?\d{4}$"
               title="Formato esperado: 8888-8888"
               required
             />
-            <small class="hint">Formato sugerido: 8888-8888</small>
           </div>
 
-          <button type="submit" class="btn-primary" aria-live="polite">
+          <button type="submit" class="btn-primary">
             Registrar y Enviar
           </button>
 
-          <!-- Espacios reservados para mensajes (cuando integremos JS) -->
-          <p class="msg success" role="status" aria-live="polite" hidden>
-            ¡Registro enviado! 🎉
-          </p>
-          <p class="msg error" role="alert" hidden>
-            Ocurrió un error. Intenta de nuevo.
-          </p>
+          <p class="msg success" hidden>¡Registro enviado! 🎉</p>
+          <p class="msg error" hidden>Ocurrió un error. Intenta de nuevo.</p>
         </form>
       </section>
     </main>
@@ -101,7 +85,6 @@
       <p>© <span id="year"></span> Mundo de Fe Costa Rica · Todos los derechos reservados</p>
     </footer>
 
-    <!-- Mini script solo para el año del footer (sin lógica de app) -->
     <script>
       document.getElementById('year').textContent = new Date().getFullYear();
     </script>
