@@ -115,19 +115,25 @@ document.addEventListener("DOMContentLoaded", () => {
           acompanantes,
         });
 
-        // Enviar correo al pastor
-        await emailjs.send(
-          EMAILJS_SERVICE_ID,
-          EMAILJS_TEMPLATE_PASTOR,
-          {
-            nombre,
-            correo: correo || "No proporcionado",
-            telefono: telefono || "No proporcionado",
-            fecha: new Date().toLocaleString("es-CR"),
-            acompanantes, // 👈 muy importante
-          },
-          EMAILJS_PUBLIC_KEY
-        );
+// Convertir acompañantes a texto plano
+const acompanantesTexto = acompanantes.length
+  ? acompanantes.map(a => `${a.nombre} — ${a.relacion}`).join('\n')
+  : "Ninguno";
+
+// Enviar correo al pastor
+await emailjs.send(
+  EMAILJS_SERVICE_ID,
+  EMAILJS_TEMPLATE_PASTOR,
+  {
+    nombre,
+    correo: correo || "No proporcionado",
+    telefono: telefono || "No proporcionado",
+    fecha: new Date().toLocaleString("es-CR"),
+    acompanantes: acompanantesTexto, // ✅ ahora es texto plano
+  },
+  EMAILJS_PUBLIC_KEY
+);
+
 
         // Enviar correo al visitante si tiene correo
         if (correo) {
