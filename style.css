@@ -208,3 +208,53 @@ input:active { transform: translateY(0.5px); }
   font-size: 14px;
   font-weight: 400;
 }
+.btn-secondary {
+  background: #1f3b8a;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 5px;
+  transition: 0.2s ease-in-out;
+}
+.btn-secondary:hover {
+  background: #0b1e4d;
+}
+.acompanante-input {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 8px;
+  align-items: center;
+}
+.acompanante-input input {
+  flex: 1;
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+@media (max-width: 600px) {
+  .acompanante-input {
+    flex-direction: column; /* apila los campos */
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .acompanante-input input {
+    width: 100%;
+    font-size: 1rem;
+    padding: 10px;
+  }
+
+  .acompanante-input .btn-remove {
+    align-self: flex-end;
+    padding: 4px 8px;
+    font-size: 0.9rem;
+  }
+
+  #btnAddAcompanante {
+    width: 100%;
+    margin-top: 8px;
+  }
+}
+
