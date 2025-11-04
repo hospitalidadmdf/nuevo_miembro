@@ -4,19 +4,17 @@
    ========================================== */
 
 // 🕊️ EmailJS CONFIGURACIÓN
-// Crea una cuenta en https://www.emailjs.com y coloca tus datos:
 const EMAILJS_SERVICE_ID = "service_bq2os92";
 const EMAILJS_TEMPLATE_PASTOR = "template_yymapv4";
 const EMAILJS_TEMPLATE_VISITANTE = "template_97nop0r";
-const EMAILJS_PUBLIC_KEY = "uS7NMxU4mD_GgRgia"; // tu clave pública real
+const EMAILJS_PUBLIC_KEY = "uS7NMxU4mD_GgRgia";
 
-// Inicializar EmailJS con configuración ampliada
 emailjs.init({
   publicKey: EMAILJS_PUBLIC_KEY,
   blockHeadless: false,
   limitRate: {
     id: "MundoDeFeApp",
-    throttle: 10000, // 10 seg entre envíos para prevenir spam
+    throttle: 10000, // 10 segundos entre envíos
   },
 });
 
@@ -40,105 +38,118 @@ const firebaseConfig = {
   appId: "1:460182229194:web:0dae840c04f5b5a7236433",
 };
 
-// Inicializar Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// ================================
-// Función principal de envío
-// ================================
-document
-  .getElementById("form-visitante")
+// ====================================================
+// 🔹 Esperar a que el DOM esté listo antes de ejecutar
+// ====================================================
+document.addEventListener("DOMContentLoaded", () => {
+  // 🧍‍♂️ Acompañantes dinámicos
+  const contenedorAcomp = document.getElementById("acompanantes-container");
+  const btnAddAcomp = document.getElementById("btnAddAcompanante");
 
-   // 🧍‍♂️ Acompañantes dinámicos
-const contenedorAcomp = document.getElementById("acompanantes-container");
-const btnAddAcomp = document.getElementById("btnAddAcompanante");
+  if (btnAddAcomp && contenedorAcomp) {
+    btnAddAcomp.addEventListener("click", () => {
+      const div = document.createElement("div");
+      div.classList.add("acompanante-input");
 
-btnAddAcomp.addEventListener("click", () => {
-  const div = document.createElement("div");
-  div.classList.add("acompanante-input");
+      div.innerHTML = `
+        <input type="text" name="nombreAcomp" placeholder="Nombre del acompañante" />
+        <input type="text" name="relacionAcomp" placeholder="Relación (esposa, hijo, amigo...)" />
+        <button type="button" class="btn-secondary btn-remove">✖</button>
+      `;
 
-  div.innerHTML = `
-    <input type="text" name="nombreAcomp" placeholder="Nombre del acompañante" required />
-    <input type="text" name="relacionAcomp" placeholder="Relación (esposa, hijo, amigo...)" required />
-    <button type="button" class="btn-secondary btn-remove">✖</button>
-  `;
+      div.querySelector(".btn-remove").addEventListener("click", () => div.remove());
 
-  div.querySelector(".btn-remove").addEventListener("click", () => div.remove());
-  contenedorAcomp.appendChild(div);
-});
-
-  .addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const nombre = document.getElementById("nombre").value.trim();
-    const correo = document.getElementById("correo").value.trim();
-    const telefono = document.getElementById("telefono").value.trim();
-
-    if (!nombre) {
-      mostrarMensaje("Por favor, completa el campo de nombre.", "error");
-      return;
-    }
-
-    const versiculo = versiculos[Math.floor(Math.random() * versiculos.length)];
-    const timestamp = new Date().toISOString();
-
-    try {
-      // Guardar en Firebase
-      const nuevoRef = db.ref("visitantes").push();
-       // Capturar acompañantes
-const acompElements = document.querySelectorAll(".acompanante-input");
-let acompanantes = [];
-
-acompElements.forEach(div => {
-  const nombre = div.querySelector('[name="nombreAcomp"]').value.trim();
-  const relacion = div.querySelector('[name="relacionAcomp"]').value.trim();
-  if (nombre) {
-    acompanantes.push({ nombre, relacion });
+      // Pequeña animación al aparecer
+      div.style.opacity = "0";
+      contenedorAcomp.appendChild(div);
+      setTimeout(() => {
+        div.style.transition = "opacity 0.3s ease";
+        div.style.opacity = "1";
+      }, 50);
+    });
   }
-});
-      await nuevoRef.set({
-        nombre,
-        correo,
-        telefono,
-        fecha: timestamp,
-        acompanantes, // 👈 aquí
-      });
 
-      // Enviar correo al pastor (usando método directo con clave pública)
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_PASTOR,
-        {
+  // ================================
+  // Función principal de envío
+  // ================================
+  document
+    .getElementById("form-visitante")
+    .addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const nombre = document.getElementById("nombre").value.trim();
+      const correo = document.getElementById("correo").value.trim();
+      const telefono = document.getElementById("telefono").value.trim();
+
+      if (!nombre) {
+        mostrarMensaje("Por favor, completa el campo de nombre.", "error");
+        return;
+      }
+
+      const versiculo = versiculos[Math.floor(Math.random() * versiculos.length)];
+      const timestamp = new Date().toISOString();
+
+      try {
+        // Capturar acompañantes
+        const acompElements = document.querySelectorAll(".acompanante-input");
+        let acompanantes = [];
+
+        acompElements.forEach((div) => {
+          const nombre = div.querySelector('[name="nombreAcomp"]').value.trim();
+          const relacion = div.querySelector('[name="relacionAcomp"]').value.trim();
+          if (nombre) {
+            acompanantes.push({ nombre, relacion });
+          }
+        });
+
+        // Guardar en Firebase
+        const nuevoRef = db.ref("visitantes").push();
+        await nuevoRef.set({
           nombre,
-          correo: correo || "No proporcionado",
-          telefono: telefono || "No proporcionado",
-          fecha: new Date().toLocaleString("es-CR"),
-        },
-        EMAILJS_PUBLIC_KEY
-      );
+          correo,
+          telefono,
+          fecha: timestamp,
+          acompanantes,
+        });
 
-      // Enviar correo al visitante si tiene correo
-      if (correo) {
+        // Enviar correo al pastor
         await emailjs.send(
           EMAILJS_SERVICE_ID,
-          EMAILJS_TEMPLATE_VISITANTE,
+          EMAILJS_TEMPLATE_PASTOR,
           {
             nombre,
-            correo,
-            versiculo,
+            correo: correo || "No proporcionado",
+            telefono: telefono || "No proporcionado",
+            fecha: new Date().toLocaleString("es-CR"),
           },
           EMAILJS_PUBLIC_KEY
         );
-      }
 
-      mostrarMensaje("¡Registro enviado con éxito! 🎉", "success");
-      e.target.reset();
-    } catch (error) {
-      console.error("Error al enviar correos:", error);
-      mostrarMensaje("Error al enviar los correos. Intenta de nuevo.", "error");
-    }
-  });
+        // Enviar correo al visitante si tiene correo
+        if (correo) {
+          await emailjs.send(
+            EMAILJS_SERVICE_ID,
+            EMAILJS_TEMPLATE_VISITANTE,
+            {
+              nombre,
+              correo,
+              versiculo,
+            },
+            EMAILJS_PUBLIC_KEY
+          );
+        }
+
+        mostrarMensaje("¡Registro enviado con éxito! 🎉", "success");
+        e.target.reset();
+      } catch (error) {
+        console.error("Error al enviar correos:", error);
+        mostrarMensaje("Error al enviar los correos. Intenta de nuevo.", "error");
+      }
+    });
+});
 
 // ================================
 // Función para mostrar mensajes
