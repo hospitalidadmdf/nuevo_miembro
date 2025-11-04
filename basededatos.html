@@ -159,6 +159,46 @@
     border-radius: 8px;
   }
 }
+      .acompanantes-block {
+  margin-top: 10px;
+  background: #f8faff;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.acompanantes-list {
+  margin: 6px 0 0 10px;
+  padding-left: 15px;
+  color: #333;
+}
+
+.acompanantes-list li {
+  margin-bottom: 4px;
+}
+
+      @media (max-width: 600px) {
+  .acompanantes-block {
+    padding: 8px;
+    margin-top: 8px;
+    background: #eef2ff; /* un poco más claro en móvil */
+  }
+
+  .acompanantes-block p {
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+  }
+
+  .acompanantes-list {
+    padding-left: 18px;
+  }
+
+  .acompanantes-list li {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin-bottom: 3px;
+  }
+}
+
 
 
     </style>
@@ -209,6 +249,7 @@
             const card = document.createElement("div");
             card.classList.add("card");
 
+            // Construcción de la tarjeta
             card.innerHTML = `
               <div class="card-header">
                 <h3>${data.nombre || "Sin nombre"}</h3>
@@ -219,13 +260,29 @@
                 <p><strong>Teléfono:</strong> ${data.telefono || "No proporcionado"}</p>
                 <p><strong>Fecha:</strong> ${new Date(data.fecha).toLocaleString("es-CR")}</p>
 
-                <div class="btn-group">
-                  <button class="edit">Editar</button>
-                  <button class="save" style="display:none;">Guardar</button>
-                  <button class="delete">Borrar</button>
-                </div>
-              </div>
-            `;
+                ${
+                  data.acompanantes && data.acompanantes.length
+                ? `
+                  <div class="acompanantes-block">
+                  <p><strong>Acompañantes:</strong></p>
+                  <ul class="acompanantes-list">
+                ${data.acompanantes
+                  .map(a => `<li>${a.nombre} — <em>${a.relacion}</em></li>`)
+                  .join("")}
+              </ul>
+            </div>
+          `
+        : ""
+    }
+
+    <div class="btn-group">
+      <button class="edit">Editar</button>
+      <button class="save" style="display:none;">Guardar</button>
+      <button class="delete">Borrar</button>
+    </div>
+  </div>
+`;
+
 
             // 🔽 toggle desplegable
             const header = card.querySelector(".card-header");
