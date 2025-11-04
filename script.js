@@ -124,6 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
             correo: correo || "No proporcionado",
             telefono: telefono || "No proporcionado",
             fecha: new Date().toLocaleString("es-CR"),
+            acompanantes, // 👈 muy importante
           },
           EMAILJS_PUBLIC_KEY
         );
