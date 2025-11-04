@@ -252,7 +252,15 @@
             // Construcción de la tarjeta
             card.innerHTML = `
               <div class="card-header">
-                <h3>${data.nombre || "Sin nombre"}</h3>
+                <h3>
+                  ${data.nombre || "Sin nombre"}
+                  ${
+                    data.acompanantes && data.acompanantes.length
+                    ? `<span class="has-acompanantes" title="Este visitante tiene acompañantes">👥</span>`
+                    : ""
+                  }
+                </h3>
+
                 <span class="arrow">▼</span>
               </div>
               <div class="card-content">
