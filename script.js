@@ -49,6 +49,25 @@ const db = firebase.database();
 // ================================
 document
   .getElementById("form-visitante")
+
+   // 🧍‍♂️ Acompañantes dinámicos
+const contenedorAcomp = document.getElementById("acompanantes-container");
+const btnAddAcomp = document.getElementById("btnAddAcompanante");
+
+btnAddAcomp.addEventListener("click", () => {
+  const div = document.createElement("div");
+  div.classList.add("acompanante-input");
+
+  div.innerHTML = `
+    <input type="text" name="nombreAcomp" placeholder="Nombre del acompañante" required />
+    <input type="text" name="relacionAcomp" placeholder="Relación (esposa, hijo, amigo...)" required />
+    <button type="button" class="btn-secondary btn-remove">✖</button>
+  `;
+
+  div.querySelector(".btn-remove").addEventListener("click", () => div.remove());
+  contenedorAcomp.appendChild(div);
+});
+
   .addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -67,11 +86,23 @@ document
     try {
       // Guardar en Firebase
       const nuevoRef = db.ref("visitantes").push();
+       // Capturar acompañantes
+const acompElements = document.querySelectorAll(".acompanante-input");
+let acompanantes = [];
+
+acompElements.forEach(div => {
+  const nombre = div.querySelector('[name="nombreAcomp"]').value.trim();
+  const relacion = div.querySelector('[name="relacionAcomp"]').value.trim();
+  if (nombre) {
+    acompanantes.push({ nombre, relacion });
+  }
+});
       await nuevoRef.set({
         nombre,
         correo,
         telefono,
         fecha: timestamp,
+        acompanantes, // 👈 aquí
       });
 
       // Enviar correo al pastor (usando método directo con clave pública)
