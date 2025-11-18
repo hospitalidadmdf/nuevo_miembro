@@ -225,6 +225,18 @@
   </head>
 
   <body>
+
+    <script>
+  const ACCESS_CODE = "1234"; // ← Cambiá el código aquí
+
+  const userCode = prompt("Ingrese el código de acceso:");
+
+  if (userCode !== ACCESS_CODE) {
+    alert("Código incorrecto. Acceso denegado.");
+    window.location.href = "https://google.com";
+  }
+</script>
+
     <header>
       <h1>📋 Registro de Visitantes</h1>
       <p style="opacity: 0.9">Mundo de Fe Costa Rica</p>
